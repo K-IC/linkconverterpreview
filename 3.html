@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>link converter for IC</title>
+  <meta charset="utf-8">
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166913057-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-166913057-1');
+  </script>
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./style.css">
+
+</head>
+
+<body>
+<link rel="stylesheet" href="style.css">
+  <h1>움짤/영상/음성 쉽게 삽입하기</h1>
+  <p>※ 구글 링크만 사용가능함 주의</p>
+  <p>※ 링크 공유 허용해야됨 주의</p>
+
+  <div id="placeholder">
+  <p><input type="text" id="input" placeholder=" https://drive.google.com/..." size="100%"></p>
+  </div>
+
+  <div id="buttons">
+  <input type="button" id="process" value="사진/움짤 링크" onclick="processImage()" style="height:40px">
+  <input type="button" id="forVideo" value="영상/음성 링크" onclick="processVideo()" style="height:40px">
+  <input type="button" value="링크 복사하기" onclick="copyToClipboard()" style="height:40px">
+  <input type="button" id="clear" value="입력창 지우기" onclick="clearInput()" style="height:40px">
+  </div>
+
+
+  <div id="result"></div>
+
+</html>
+
+
+  <script type="text/javascript">
+
+    var temp;
+    var substring;
+    var wrong = 0;
+
+    var pc = "https://drive.google.com/open?id";
+    var mobile = "https://drive.google.com/file/d/";
+
+    function processImage() {
+      temp = document.getElementById("input").value;
+
+      frontPart = temp.substring(0,32);
+
+      if(frontPart == pc) {
+        substring = temp.substring(33,66);
+      } else if (frontPart == mobile) {
+        substring = temp.substring(32,65);
+      } else {
+        wrong = 1;
+        substring = "WRONG LINK"
+        alert("잘못된 링크야ㅠㅠ");
+      }
+
+      if(wrong == 0) {
+        linkForCopy = "img src=\"http://drive.google.com/uc?export=view&id=" + substring + "\"/>";
+        result = "<p>&lt" + linkForCopy + "</p>";
+      } else {
+        linkForCopy = "WRONG LINK"
+        result = "<b style=\"color:red\">WRONG LINK</b>"
+      }
+
+      var blk = document.getElementById("result");
+      blk.innerHTML = result;
+    }
+
+
+    function processVideo() {
+      temp = document.getElementById("input").value;
+
+      frontPart = temp.substring(0,32);
+
+      if(frontPart == pc) {
+        substring = temp.substring(33,66);
+      } else if (frontPart == mobile) {
+        substring = temp.substring(32,65);
+      } else {
+        wrong = 1;
+        substring = "WRONG LINK"
+        alert("잘못된 링크야ㅠㅠ");
+      }
+
+      if(wrong == 0) {
+        linkForCopy = "iframe src=\"https://drive.google.com/file/d/" + substring + "/preview\" width=\"544\" height=\"306\" allowfullscreen>";
+        result = "<p>&lt" + linkForCopy + "&lt/iframe></p>";
+      } else {
+        linkForCopy = "WRONG LINK"
+        result = "<b style=\"color:red\">WRONG LINK</b>"
+      }
+
+      var blk = document.getElementById("result");
+      blk.innerHTML = result;
+    }
+
+
+    function copyToClipboard(){
+      var t = document.createElement("textarea");
+      document.body.appendChild(t);
+      t.value = "<" + linkForCopy;
+      t.select();
+      document.execCommand('copy');
+      document.body.removeChild(t);
+    }
+
+    function clearInput() {
+      document.getElementById("input").value = "";
+    }
+
+  </script>
+</body>
