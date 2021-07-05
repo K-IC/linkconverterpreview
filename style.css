@@ -10,6 +10,15 @@ div {
   text-align: center;
 }
 
+a {
+  text-align: center;
+}
+
+img {
+  margin: 20px;
+  border-bottom: solid 10px;
+}
+
 #input {
   padding: .5em .5em;
   width:80%;
